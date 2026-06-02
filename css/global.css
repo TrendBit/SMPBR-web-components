@@ -39,20 +39,9 @@ option{
   background-color: var(--bg-color-1);
 }
 
-p{
-  font-size: medium;
-  white-space: nowrap;
-}
-
 h1 {
-    font-size: 40px;
     font-weight: bold;
 }
-
-h2 {
-    font-size: large;
-}
-
 
 ul,li{
     list-style: none;
