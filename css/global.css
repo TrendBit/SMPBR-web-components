@@ -1,0 +1,139 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: var(--text-color-light);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,body,#root{
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+
+  color: var(--text-color-light);
+  background: var(--bg-color-1);
+  
+}
+
+*{
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img{
+    height: 100%;
+}
+
+option{
+  background-color: var(--bg-color-1);
+}
+
+p{
+  font-size: medium;
+  white-space: nowrap;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: large;
+}
+
+
+ul,li{
+    list-style: none;
+}
+
+h1,h2,h3,h4,h5{
+  white-space: nowrap;
+}
+
+button.button, .button{
+  background-color: var(--bg-color-1);
+  cursor: pointer;
+  border: var(--bg-color-4) 1px solid;
+  padding: 5px;
+  border-radius: 2px;
+  transition: background-color 0.1s cubic-bezier(.22, .61, .36, 1), border-color 0.1s ease-in-out;
+  color: var(--text-color-light);
+}
+
+button.button:hover:enabled, .button:hover{
+  background: var(--bg-color-3);
+  border-color: var(--acc-color-3);
+}
+
+button.button:active:enabled, .button:active{
+  background: var(--acc-color-2);
+}
+
+button.button:disabled,  .button:disabled{
+  cursor:not-allowed;
+  background: var(--bg-color-3);
+  border-color: var(--bg-color-4);
+}
+
+button.button.toggled, .button.toggled{
+    color: var(--bg-color-1);
+    background-color: var(--acc-color-3);
+    font-weight: bold;
+}
+
+.button.toggled:hover:enabled, button.button.toggled:hover:enabled{
+    background: var(--acc-color-2);
+    border-color: var(--acc-color-4);
+}
+
+button.button.toggled:active:enabled, .button.toggled:active{
+  background: var(--bg-color-1);
+}
+
+button.button.toggled:disabled,  .button.toggled:disabled{
+    background: var(--acc-color-2);
+    border-color: var(--acc-color-3);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(1, 1, 1, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-color-5);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  filter: brightness(1.2);
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
