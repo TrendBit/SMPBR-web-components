@@ -38,7 +38,7 @@ export function AutoScrollerP(props: AutoScrollerProps) {
             checkOverflow(containerEl);
         }
     });
-    let intervalID : number | undefined = undefined;
+    let intervalID : undefined | NodeJS.Timeout = undefined;
 
 
     createEffect(()=>{
