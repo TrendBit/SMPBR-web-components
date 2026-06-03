@@ -69,7 +69,7 @@ export function RefreshProvider(props: RefreshProviderProps) {
     doRefresh(false);
   }
 
-  let intervalId : number | undefined = undefined;
+  let intervalId : NodeJS.Timeout | undefined = undefined;
 
   function stopInterval(){
     if(intervalId){
