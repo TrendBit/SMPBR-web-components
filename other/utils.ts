@@ -210,3 +210,20 @@ export function isValidDateTime(target: any): boolean {
 export function isNull(target: any): target is null {
     return target === null;
 }
+
+// Warning, this function is quite expensive, as it loops through 
+// the given options and tries to find a match
+export function isStringEnum<T extends readonly string[]>(
+  target: unknown,
+  options: T
+): target is T[number] {
+    if (!isString(target)) {
+        return false;
+    }
+    for (let option of options) {
+        if (target == option) {
+            return true;
+        }
+    }
+    return false;
+}
