@@ -28,20 +28,20 @@ export function RadialOption(props : RadialOptionProps) {
   );
 }
 
-interface RadialSelectProps{
+interface RadialSelectProps<T extends readonly string[]>{
     groupName : string;
     selections: {
-        value: string;
+        value: T[number];
         label: string;
     }[];
     defaultSelectedIndex?:number;
-    getter: ()=>string;
-    setter: (value: string)=>void;
+    getter: ()=>T[number];
+    setter: (value: T[number])=>void;
 }
 
-export function RadialSelect(props : RadialSelectProps){
+export function RadialSelect<T extends readonly string[]>(props : RadialSelectProps<T>){
     function updateSelection(value : string){
-        props.setter(value);
+        props.setter(value as T[number]);
     }
     return(
         <div class={styles.container}>
