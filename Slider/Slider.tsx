@@ -59,13 +59,16 @@ interface SliderProps{
     setter : (value: number) => void,
     getter : () => number,
     bounds : {
-        min : number,
+        min: number,
+        minDecimals?: number
         max : number,
-        show? : boolean
+        maxDecimals?: number
+        show?: boolean,
+        labelOffset?: string
     }
     decimals?:number,
     step? : number,
-    unit? : string,
+    unit?: string,
     onChange? : (value : number)=>void,
     onInput? : (value : number)=>void,
     displayModifier? : (value : number)=>number
@@ -99,9 +102,17 @@ export function Slider(props : SliderProps){
             </div>
             <div class={styles.body}>
                 <Show when={props.bounds.show!=undefined?props.bounds.show:true}>
-                    <div class={styles.minmax}>
-                        <p>{props.bounds.min}</p>
-                        <p>{props.bounds.max}</p>
+                    <div class={styles.minmax} style={{left: `calc(50% - ${props.bounds.labelOffset ?? "20px"})`}}>
+                        <p>{
+                            (props.bounds.minDecimals) ?
+                                props.bounds.min.toFixed(props.bounds.minDecimals) :
+                                props.bounds.min
+                        }</p>
+                        <p>{
+                            (props.bounds.maxDecimals) ?
+                                props.bounds.max.toFixed(props.bounds.maxDecimals) :
+                                props.bounds.max
+                        }</p>
                     </div>
                 </Show>
                 <input 

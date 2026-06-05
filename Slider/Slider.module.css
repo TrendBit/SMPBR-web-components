@@ -77,7 +77,8 @@
     .minmax{
         position: absolute;
 
-        left: calc(50% - 20px);
+        
+        /*left: calc(50% - 20px); overwritten by component*/
 
         flex-direction: column-reverse;
         height: 100%;
