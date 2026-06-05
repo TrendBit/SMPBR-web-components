@@ -7,7 +7,9 @@ interface InputElementProps{
     setter : (value : number) => void;
     getter : () => number;
     min? : number;
-    max? : number;
+    max?: number;
+    onChange?: (value: number) => void;
+    placeholder?: string;
 }
 
 
@@ -17,6 +19,7 @@ export function InputField(props: InputElementProps) {
             <input
                 class={"button"}
                 type="text"
+                placeholder={props.placeholder}
                 onInput={e => {
                     if (props.max) {
                         e.currentTarget.value = enforceMax(e.currentTarget.value,props.max);
@@ -26,7 +29,8 @@ export function InputField(props: InputElementProps) {
                     if (props.min) {
                         e.currentTarget.value = enforceMin(e.currentTarget.value,props.min);
                     }
-                    props.setter(+e.currentTarget.value)
+                    props.setter(+e.currentTarget.value);
+                    props.onChange?.(+e.currentTarget.value);
                 }}
                 value={props.getter()}
             ></input>
