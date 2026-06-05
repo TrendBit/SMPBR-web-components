@@ -7,7 +7,7 @@ type RefreshValue = {
   timeStamp : number
 }
 
-type RefreshContextValue = {
+export type RefreshContextValue = {
   disabled: ()=>boolean,
   refresh: (forced : boolean) => void;
   listen: () => RefreshValue
