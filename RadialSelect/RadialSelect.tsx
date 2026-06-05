@@ -36,7 +36,8 @@ interface RadialSelectProps<T extends readonly string[]>{
     }[];
     defaultSelectedIndex?:number;
     getter: ()=>T[number];
-    setter: (value: T[number])=>void;
+    setter: (value: T[number]) => void;
+    class?: string
 }
 
 export function RadialSelect<T extends readonly string[]>(props : RadialSelectProps<T>){
@@ -44,7 +45,9 @@ export function RadialSelect<T extends readonly string[]>(props : RadialSelectPr
         props.setter(value as T[number]);
     }
     return(
-        <div class={styles.container}>
+        <div class={props.class} classList={{
+            [styles.container]: true
+        }}>
             <For each={props.selections}>
                 {(selection, index) => (
                     <RadialOption
