@@ -1,5 +1,5 @@
 import styles from "./Slider.module.css"
-import { createEffect, Show } from "solid-js"
+import { createEffect, For, Show } from "solid-js"
 import { mapRangeToRange } from "../other/utils"
 import { isChromium, isSafari } from "@solid-primitives/platform";
 
@@ -46,7 +46,10 @@ export function SliderSimple(props:SliderSimpleProps){
             value={props.getter()}
             step={props.step}
             ref={slider}
-            onInput={e => {props.setter(+e.currentTarget.value); chromeFix_Slider(e.currentTarget,props.direction == "V")}}
+            onInput={e => {
+                props.setter(+e.currentTarget.value);
+                chromeFix_Slider(e.currentTarget, props.direction == "V");
+            }}
         ></input>
     )
 }
@@ -66,6 +69,10 @@ interface SliderProps{
         show?: boolean,
         labelOffset?: string
     }
+    deadzones?: {
+        snapPoint: number,
+        range: number
+    }[]
     decimals?:number,
     step? : number,
     unit?: string,
@@ -75,7 +82,8 @@ interface SliderProps{
 }
 
 export function Slider(props : SliderProps){
-    let slider : HTMLInputElement | undefined = undefined;
+    let slider: HTMLInputElement | undefined = undefined;
+    let lastInputIsKey: boolean = false;
 
     if(isChromium || isSafari){
         createEffect(() => {
@@ -115,17 +123,51 @@ export function Slider(props : SliderProps){
                         }</p>
                     </div>
                 </Show>
-                <input 
-                    class={styles.slider + " " + styles[props.direction]}
-                    ref={slider}
-                    type="range"
-                    min={props.bounds.min}
-                    max={props.bounds.max}
-                    value={props.getter()}
-                    step={props.step}
-                    onInput={e => {props.setter(+e.currentTarget.value); props.onInput?.(+e.currentTarget.value)}}
-                    onChange={e=>{props.onChange?.(+e.currentTarget.value)}}
-                ></input>
+                <div class={styles.slider_container}>
+                    <Show when={props.deadzones !== undefined}>
+                        <div class={styles.ticks}>
+                            <For each={props.deadzones ?? []}>
+                                {(e) => (
+                                    <div
+                                        style={(props.direction == "H") ?
+                                            { left: ((e.snapPoint - props.bounds.min) / (props.bounds.max  - props.bounds.min))*100 + "%" } : 
+                                            { bottom: ((e.snapPoint - props.bounds.min) / (props.bounds.max  - props.bounds.min))*100 + "%" }
+                                        }
+                                        class={styles.tick}
+                                    ></div>
+                                )}
+                            </For>
+                        </div>
+                    </Show>
+                    <input 
+                        class={styles.slider + " " + styles[props.direction]}
+                        ref={slider}
+                        type="range"
+                        min={props.bounds.min}
+                        max={props.bounds.max}
+                        value={props.getter()}
+                        step={props.step}
+                        onPointerDown={() => {lastInputIsKey=false;}}
+                        onKeyDown={() => {lastInputIsKey=true;}}
+                        onInput={e => {
+                            let value = +e.currentTarget.value;
+                            if (!lastInputIsKey) {
+                                for (let deadzone of props.deadzones ?? []) {
+                                    if (Math.abs(value - deadzone.snapPoint) < deadzone.range) {
+                                        e.currentTarget.value = deadzone.snapPoint.toString();
+                                        value = deadzone.snapPoint;
+                                        break;
+                                    }
+                                }
+                            }
+                            props.setter(value);
+                            props.onInput?.(value);
+                        }}
+                        onChange={e => {
+                            props.onChange?.(+e.currentTarget.value)
+                        }}
+                    ></input>
+                </div>
             </div>
         </div>
     )

@@ -10,6 +10,17 @@
     align-items: center;
 
     padding: 8px;
+    
+    --rail-width: 8px;
+    --thumb-width: 8px;
+    --thumb-height: 20px;
+    --tick-overflow: 10px;
+}
+
+.slider{
+    --rail-width: 8px;
+    --thumb-width: 8px;
+    --thumb-height: 20px;
 }
 
 .header{
@@ -58,8 +69,36 @@
 
     color: var(--bg-color-5);
 }
+.slider_container{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-direction: column;
+    position: relative;
+    height: var(--rail-width);
+    
+    >input{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+}
 
+.ticks{
+    position: absolute;
+    height: calc(100% + var(--tick-overflow));
+    width: 100%;
+    
+    pointer-events: none
+}
 
+.tick{
+    position: absolute;
+    height: 100%;
+    width: 0px;
+    border: 1px solid var(--bg-color-3);
+    border-radius: 2px;
+}
 
 .container.V{
     flex-direction: column;
@@ -83,7 +122,23 @@
         flex-direction: column-reverse;
         height: 100%;
     }
+    .slider_container{
+        flex-direction: row;
+        width: var(--rail-width);
+        height: unset;
+    }
+    .ticks{
+        height: 100%;
+        width: calc(100% + var(--tick-overflow));
+    }
+    
+    .tick{
+        position: absolute;
+        height: 0px;
+        width: 100%;
+    }
 }
+
 
 
 
@@ -100,10 +155,9 @@
 
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none !important;
-    ;
     appearance: none;
-    width: 8px;
-    height: 20px;
+    width: var(--thumb-width);
+    height: var(--thumb-height);
     border-radius: 4px;
     background: var(--acc-color-3);
     box-shadow: 0px 0px 6px 10px rgba(25, 25, 25, 0.5);
@@ -111,13 +165,13 @@
 }
 
 .V.slider::-webkit-slider-thumb {
-    width: 20px;
-    height: 8px;
+    width: var(--thumb-height);
+    height: var(--thumb-width);
 }
 
 .slider::-moz-range-thumb {
-    width: 8px;
-    height: 20px;
+    width: var(--thumb-width);
+    height: var(--thumb-height);
     border-radius: 4px;
     background: var(--acc-color-3);
     box-shadow: 0px 0px 6px 10px rgba(25, 25, 25, 0.5);
@@ -126,8 +180,8 @@
 }
 
 .V.slider::-moz-range-thumb {
-    width: 20px;
-    height: 8px;
+    width: var(--thumb-height);
+    height: var(--thumb-width);
 }
 
 .slider::-moz-range-progress {
@@ -145,13 +199,14 @@
 }
 
 .slider:not(.V) {
-    height: 8px;
+    height: var(--rail-width);
 }
 
 .slider.V {
     writing-mode: vertical-lr;
     direction: rtl;
     appearance: slider-vertical;
-    width: 8px;
+    width: var(--rail-width);
     vertical-align: bottom;
 }
+
