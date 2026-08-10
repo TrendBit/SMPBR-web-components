@@ -227,3 +227,81 @@ export function isStringEnum<T extends readonly string[]>(
     }
     return false;
 }
+
+
+let timeUnitName : [number, string][] = [
+    [365 * 24 * 60 * 60 * 1000, 'year'],
+    [30 * 24 * 60 * 60 * 1000, 'month'],
+    [24 * 60 * 60 * 1000, 'day'],
+    [60 * 60 * 1000, 'hour'],
+    [60 * 1000, 'minute'],
+    [1 * 1000, 'second'],
+    [1, 'milisecond']
+];
+
+let timeUnitNamePlural : Record<string, string> = {
+    'year'   : 'years',
+    'month'  : 'months',
+    'day'    : 'days',
+    'hour'   : 'hours',
+    'minute' : 'minutes',
+    'second': 'seconds',
+    'milisecond' : 'miliseconds'
+};
+
+// Source - https://stackoverflow.com/q/34002985
+// Posted by code-8, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-08-10, License - CC BY-SA 3.0
+export function timeElapsedString(timeSegment: number, options?: { maxTimeStrings?: number; excludeLabel?: boolean }): string{
+    const maxTimeStrings: number = options?.maxTimeStrings ?? 5000
+    const excludeLabel: boolean = options?.excludeLabel ?? false
+    
+    if (timeSegment == 0) {
+        if (excludeLabel) {
+            return "0 seconds"
+        }
+        return "now";
+    }
+
+    let label : string = ""
+    
+    if (timeSegment < 0) {
+        label = "in future"
+        timeSegment*=-1
+    } else {
+        label = "ago"
+    }
+    
+
+   
+
+    let result = "";
+    let timeStrings = 0;
+    
+    for (let [millis, str] of timeUnitName) {
+        let count = Math.floor(timeSegment / millis);
+        if (count >= 1){
+            result += count.toString()
+                + " "
+                + (count > 1 ? timeUnitNamePlural[str] : str)
+                + " "
+            
+            timeSegment -= count * millis
+
+            timeStrings ++
+            if (timeStrings >= maxTimeStrings) {
+                console.log("maximum time string reached")
+                break;
+            }
+        }
+    }
+
+    if (excludeLabel) {
+        result.trim()
+    } else {
+        result += label
+    }
+
+
+    return result;
+}
