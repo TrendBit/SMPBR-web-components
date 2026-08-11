@@ -7,3 +7,14 @@ export class Mutex {
         });
     }
 }
+
+/*
+## EXAMPLE
+
+const unlock = await portMutex.lock();
+try {
+    code...
+} finally {
+    unlock();
+}
+*/
