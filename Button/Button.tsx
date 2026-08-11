@@ -9,7 +9,8 @@ export interface ButtonProps {
     disabled?: boolean;
     toggled?: boolean;
     tooltip : string;
-    disabledTooltip ?:string;
+    disabledTooltip?: string;
+    flat?: boolean;
 };
 
 function getTooltip(tooltip : string, disabledTooltip : string | undefined, disabled : boolean){
@@ -53,19 +54,20 @@ export function Button(props: ButtonProps) {
 
 
     return (
-        <button 
+        <button
             class={props.class}
             classList={{
                 [styles.container]: true,
                 [styles.error]: error(),
                 ["toggled"]: props.toggled ?? false,
-                ["button"]:true
-            }} 
+                ["button"]: true,
+                ["flat"]: props.flat ?? false
+            }}
             disabled={isDisabled(loading(),props.disabled)}
             onClick={onclick}
             title={getTooltip(props.tooltip,props.disabledTooltip,isDisabled(loading(),props.disabled))}
         >
-            <span 
+            <span
                 class={styles.normal_text}
             >
                 {props.children}

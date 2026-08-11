@@ -11,6 +11,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --flat-btn-opacity: 0.5;
 }
 
 html,body,#root{
@@ -21,7 +22,7 @@ html,body,#root{
 
   color: var(--text-color-light);
   background: var(--bg-color-1);
-  
+
 }
 
 *{
@@ -94,6 +95,44 @@ button.button.toggled:active:enabled, .button.toggled:active{
 button.button.toggled:disabled,  .button.toggled:disabled{
     background: var(--acc-color-2);
     border-color: var(--acc-color-3);
+}
+
+
+
+button.button.flat, .button.flat{
+    border: none;
+    background: none;
+}
+
+button.button.flat:hover:enabled, .button.flat:hover{
+    background: rgba(var(--bg-color-3-rgb),var(--flat-btn-opacity));
+}
+
+button.button.flat:active:enabled, .button.flat:active{
+    background: rgba(var(--acc-color-2-rgb),var(--flat-btn-opacity));
+}
+
+button.button.flat:disabled,  .button.flat:disabled{
+    cursor:not-allowed;
+    background: rgba(var(--bg-color-3-rgb),var(--flat-btn-opacity));
+}
+
+button.button.flat.toggled, .button.flat.toggled{
+    color: rgba(var(--bg-color-1-rgb),var(--flat-btn-opacity));
+    background-color: rgba(var(--acc-color-3-rgb),var(--flat-btn-opacity));
+    font-weight: bold;
+}
+
+.button.flat.toggled:hover:enabled, button.button.flat.toggled:hover:enabled{
+    background: rgba(var(--acc-color-2-rgb),var(--flat-btn-opacity));
+}
+
+button.button.flat.toggled:active:enabled, .button.toggled.flat:active{
+    background: rgba(var(--bg-color-1-rgb),var(--flat-btn-opacity));
+}
+
+button.button.flat.toggled:disabled,  .button.toggled.flat:disabled{
+    background: rgba(var(--acc-color-2-rgb),var(--flat-btn-opacity));
 }
 
 ::-webkit-scrollbar {
