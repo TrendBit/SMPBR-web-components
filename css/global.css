@@ -52,6 +52,14 @@ h1,h2,h3,h4,h5{
   white-space: nowrap;
 }
 
+span.bold{
+    font-weight: bold;
+}
+
+span.underline{
+    text-decoration: underline;
+}
+
 button.button, .button{
   background-color: var(--bg-color-1);
   cursor: pointer;
@@ -102,6 +110,7 @@ button.button.toggled:disabled,  .button.toggled:disabled{
 button.button.flat, .button.flat{
     border: none;
     background: none;
+    padding: 3px;
 }
 
 button.button.flat:hover:enabled, .button.flat:hover{
