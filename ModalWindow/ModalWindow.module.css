@@ -18,6 +18,8 @@
    padding: 3px;
    border-radius: 4px;
 
+   position: relative;
+
    flex: 0 1 auto;
 
    display: flex;
@@ -34,6 +36,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
+
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    left: 0px;
 }
 
 .content{
