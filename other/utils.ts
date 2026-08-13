@@ -304,3 +304,12 @@ export function timeElapsedString(timeSegment: number, options?: { maxTimeString
 
     return result;
 }
+
+
+export function max(a: number, b: number) {
+    return (a>b)?a:b
+}
+
+export function min(a: number, b: number) {
+    return (a>b)?b:a
+}
