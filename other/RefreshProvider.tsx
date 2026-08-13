@@ -14,8 +14,8 @@ export type RefreshContextValue = {
 }
 const RefreshContext = createContext<RefreshContextValue>();
 
-interface RefreshProviderProps{ 
-  children: any, 
+interface RefreshProviderProps{
+  children: any,
   autoRefreshPeriod?: number,
   disabled?: boolean
 }
@@ -133,7 +133,7 @@ export function refreshValueUpdate(refreshValue : RefreshValue | undefined, minI
       if(refreshValue.forced){
         return true;
       }
-  
+
       if(minInterval){
         if(Date.now() - minInterval.lastUpdate > minInterval.length){
           return true

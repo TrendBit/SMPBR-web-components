@@ -27,7 +27,7 @@ export async function fetchDataAsJson(urlIn : string,additionalHeaders = {}, set
                                     'Content-Type': 'text/plain', //it has to be plain text else it will send a complex request with an additional OPTIONS request
                                     ...additionalHeaders
                                 },
-                                signal: AbortSignal.timeout( 10000 )                           
+                                signal: AbortSignal.timeout( 10000 )
                             }
                         );
     //console.log(response);
@@ -72,8 +72,8 @@ export async function sendData(urlIn : string, data : string,additionalHeaders =
         "body": data,
         "method": setMethod,
         "mode": "cors",
-        signal: AbortSignal.timeout( 10000 )  
-    });   
+        signal: AbortSignal.timeout( 10000 )
+    });
     return response;
 }
 
@@ -211,7 +211,7 @@ export function isNull(target: any): target is null {
     return target === null;
 }
 
-// Warning, this function is quite expensive, as it loops through 
+// Warning, this function is quite expensive, as it loops through
 // the given options and tries to find a match
 export function isStringEnum<T extends readonly string[]>(
   target: unknown,
@@ -255,7 +255,7 @@ let timeUnitNamePlural : Record<string, string> = {
 export function timeElapsedString(timeSegment: number, options?: { maxTimeStrings?: number; excludeLabel?: boolean }): string{
     const maxTimeStrings: number = options?.maxTimeStrings ?? 5000
     const excludeLabel: boolean = options?.excludeLabel ?? false
-    
+
     if (timeSegment == 0) {
         if (excludeLabel) {
             return "0 seconds"
@@ -264,20 +264,20 @@ export function timeElapsedString(timeSegment: number, options?: { maxTimeString
     }
 
     let label : string = ""
-    
+
     if (timeSegment < 0) {
         label = "in future"
         timeSegment*=-1
     } else {
         label = "ago"
     }
-    
 
-   
+
+
 
     let result = "";
     let timeStrings = 0;
-    
+
     for (let [millis, str] of timeUnitName) {
         let count = Math.floor(timeSegment / millis);
         if (count >= 1){
@@ -285,12 +285,11 @@ export function timeElapsedString(timeSegment: number, options?: { maxTimeString
                 + " "
                 + (count > 1 ? timeUnitNamePlural[str] : str)
                 + " "
-            
+
             timeSegment -= count * millis
 
             timeStrings ++
             if (timeStrings >= maxTimeStrings) {
-                console.log("maximum time string reached")
                 break;
             }
         }
