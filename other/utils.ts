@@ -229,36 +229,59 @@ export function isStringEnum<T extends readonly string[]>(
 }
 
 
-let timeUnitName : [number, string][] = [
-    [365 * 24 * 60 * 60 * 1000, 'year'],
-    [30 * 24 * 60 * 60 * 1000, 'month'],
-    [24 * 60 * 60 * 1000, 'day'],
-    [60 * 60 * 1000, 'hour'],
-    [60 * 1000, 'minute'],
-    [1 * 1000, 'second'],
-    [1, 'milisecond']
+type UnitNames =
+    'Y' |
+    'M' |
+    'D' |
+    'h' |
+    'm' |
+    's' |
+    'ms'
+
+let timeUnitName : [number, UnitNames][] = [
+    [365 * 24 * 60 * 60 * 1000, 'Y'],
+    [30 * 24 * 60 * 60 * 1000, 'M'],
+    [24 * 60 * 60 * 1000, 'D'],
+    [60 * 60 * 1000, 'h'],
+    [60 * 1000, 'm'],
+    [1 * 1000, 's'],
+    [1, 'ms']
 ];
 
-let timeUnitNamePlural : Record<string, string> = {
-    'year'   : 'years',
-    'month'  : 'months',
-    'day'    : 'days',
-    'hour'   : 'hours',
-    'minute' : 'minutes',
-    'second': 'seconds',
-    'milisecond' : 'miliseconds'
+let timeUnitNameLong : Record<UnitNames, string> = {
+    'Y'   : 'year',
+    'M'  : 'month',
+    'D'    : 'day',
+    'h'   : 'hour',
+    'm' : 'minute',
+    's': 'second',
+    'ms' : 'milisecond'
+};
+let timeUnitNameLongPlural : Record<UnitNames, string> = {
+    'Y'   : 'years',
+    'M'  : 'months',
+    'D'    : 'days',
+    'h'   : 'hours',
+    'm' : 'minutes',
+    's': 'seconds',
+    'ms' : 'miliseconds'
 };
 
 // Source - https://stackoverflow.com/q/34002985
 // Posted by code-8, modified by community. See post 'Timeline' for change history
 // Retrieved 2026-08-10, License - CC BY-SA 3.0
-export function timeElapsedString(timeSegment: number, options?: { maxTimeStrings?: number; excludeLabel?: boolean }): string{
+export function timeElapsedString(timeSegment: number, options?: { maxTimeStrings?: number; excludeLabel?: boolean, shortLabels?: true}): string{
     const maxTimeStrings: number = options?.maxTimeStrings ?? 5000
     const excludeLabel: boolean = options?.excludeLabel ?? false
+    const shortLabels: boolean = options?.shortLabels ?? false
 
     if (timeSegment == 0) {
         if (excludeLabel) {
-            return "0 seconds"
+            if (shortLabels) {
+                return "0s"
+            } else {
+                return "0 seconds"
+            }
         }
         return "now";
     }
@@ -282,8 +305,8 @@ export function timeElapsedString(timeSegment: number, options?: { maxTimeString
         let count = Math.floor(timeSegment / millis);
         if (count >= 1){
             result += count.toString()
-                + " "
-                + (count > 1 ? timeUnitNamePlural[str] : str)
+                + (shortLabels?"":" ")
+                + (shortLabels?str:(count > 1 ? timeUnitNameLongPlural[str] : timeUnitNameLong[str]))
                 + " "
 
             timeSegment -= count * millis
