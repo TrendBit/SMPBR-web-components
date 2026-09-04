@@ -7,14 +7,14 @@ import {
 } from "solid-js";
 import { Mutex } from "../other/objects/mutex";
 import styles from "./ModalWindow.module.css";
-import { Icon } from "../../../components/Icon/Icon";
 import { Button } from "../Button/Button";
 import { DeferredPromise } from "../other/objects/deferredPromise";
 
 interface ModalWindowProps {
     content: ()=>JSXElement;
     closeCallback: () => Promise<void>;
-    showClose: boolean
+    showClose: boolean,
+    closeButtonContent?: ()=>JSXElement
 }
 
 function ModalWindow(props: ModalWindowProps) {
@@ -27,7 +27,7 @@ function ModalWindow(props: ModalWindowProps) {
 
                         </div>
                         <Button flat={true} tooltip="close this window" callback={props.closeCallback}>
-                            <Icon class={styles.close_button} name="cancel"></Icon>
+                            {props.closeButtonContent?.()??"X"}
                         </Button>
                     </div>
                 </Show>
@@ -41,6 +41,7 @@ function ModalWindow(props: ModalWindowProps) {
 
 interface ModalWindowProviderProps {
     children: JSXElement;
+    closeButtonContent?: ()=>JSXElement
 }
 
 export type ModalWindowContextValue = {
@@ -99,6 +100,7 @@ export function ModalWindowProvider(props: ModalWindowProviderProps) {
                     closeCallback={close}
                     content={windowContent() as () => JSXElement}
                     showClose={showClose()}
+                    closeButtonContent={props.closeButtonContent}
                 ></ModalWindow>
             </Show>
             {props.children}
