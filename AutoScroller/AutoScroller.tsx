@@ -43,7 +43,7 @@ export function AutoScrollerP(props: AutoScrollerProps) {
 
     createEffect(()=>{
         if(overflowing()){
-            intervalID = setInterval(()=>{
+            intervalID = window.setInterval(()=>{
                 if(textEl){
                     let offset = (leftOffset() ?? 0);
                     let contentLen = textEl.scrollWidth + whiteSpaceWidth;

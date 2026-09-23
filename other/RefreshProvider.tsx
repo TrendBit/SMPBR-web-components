@@ -80,7 +80,7 @@ export function RefreshProvider(props: RefreshProviderProps) {
 
   function startInterval(period : number){
     stopInterval()
-    intervalId = setInterval(softRefresh,period)
+    intervalId = window.setInterval(softRefresh,period)
   }
 
   onMount(() => {
