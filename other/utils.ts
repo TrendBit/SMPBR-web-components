@@ -131,6 +131,7 @@ export function formatTime(formatString : string,timestamp =new Date(), useUTCti
     formatString = formatString.replaceAll("dd",date.toString())
     formatString = formatString.replaceAll("wd",day.toString())
     formatString = formatString.replaceAll("mo",month.toString())
+    formatString = formatString.replaceAll("yy",(year%100).toString())
     formatString = formatString.replaceAll("yyyy",year.toString())
 
     formatString = formatString.replaceAll("SS",((seconds<10)?"0"+seconds:seconds).toString());
