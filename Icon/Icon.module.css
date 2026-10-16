@@ -26,3 +26,11 @@
 .color_animated{
   transition: color 0.2s ease-in-out;
 }
+
+.with_tooltip{
+    cursor: help;
+    transition: 0.1s transform ease-out;
+}
+.with_tooltip:hover{
+    transform: scale(1.3);
+}

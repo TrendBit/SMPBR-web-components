@@ -21,6 +21,7 @@ export function createIconComponent<
         class?: string;
         scale?: number;
         animateColor?: boolean;
+        tooltip?: string
     }
     
     function Icon(props: IconProps) {
@@ -31,12 +32,14 @@ export function createIconComponent<
                     [styles.icon]: true,
                     [styles.filled]: props.filled ?? true,
                     [styles.color_animated]: props.animateColor ?? false,
+                    [styles.with_tooltip]: props.tooltip !== undefined,
                     ["icon"]: true
                 }}
                 style={{
                     color: props.color,
                     scale: props.scale
                 }}
+                title={props.tooltip}
             >
                 {iconDictionary[props.name]}
             </span>
