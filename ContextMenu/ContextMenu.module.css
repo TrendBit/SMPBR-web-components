@@ -12,6 +12,9 @@
 
     border-radius: 5px;
     padding: 5px;
+    
+    -webkit-box-shadow: 5px 5px 15px 5px #000000C0; 
+    box-shadow: 5px 5px 15px 5px #000000C0;
 }
 .anchor{
     position: absolute;
@@ -24,6 +27,7 @@
 
 .option{
     cursor: pointer;
+    padding: 2px 4px;
 }
 .option:not(:last-child){
     border-bottom: 1px solid var(--bg-color-3);
