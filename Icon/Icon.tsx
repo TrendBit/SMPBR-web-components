@@ -21,7 +21,8 @@ export function createIconComponent<
         class?: string;
         scale?: number;
         animateColor?: boolean;
-        tooltip?: string
+        tooltip?: string;
+        bold?: boolean;
     }
     
     function Icon(props: IconProps) {
@@ -33,6 +34,7 @@ export function createIconComponent<
                     [styles.filled]: props.filled ?? true,
                     [styles.color_animated]: props.animateColor ?? false,
                     [styles.with_tooltip]: props.tooltip !== undefined,
+                    [styles.bold]: props.bold ?? false,
                     ["icon"]: true
                 }}
                 style={{
