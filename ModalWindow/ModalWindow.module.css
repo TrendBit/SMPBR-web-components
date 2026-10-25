@@ -15,7 +15,6 @@
 .container{
    background-color: var(--bg-color-2);
    border: 1px solid var(--bg-color-4);
-   padding: 3px;
    border-radius: 4px;
 
    position: relative;
@@ -61,4 +60,20 @@
 
 .close_button{
    color: var(--bg-color-5);
+}
+
+.floating_close{
+    .close_button{
+        position: absolute;
+
+        border: 1ps solid var(--bg-color-5);
+        background: var(--err-color-2) !important;
+
+        border-radius: 100%;
+
+        width: 25px;
+        height: 25px;
+        
+        right: -35px;
+    }
 }

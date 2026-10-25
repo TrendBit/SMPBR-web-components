@@ -14,6 +14,7 @@ interface ModalWindowProps {
     content: ()=>JSXElement;
     closeCallback: () => Promise<void>;
     showClose: boolean,
+    closeButtonFloating: boolean
     closeButtonContent?: ()=>JSXElement
 }
 
@@ -22,11 +23,14 @@ function ModalWindow(props: ModalWindowProps) {
         <div class={styles.background}>
             <div class={styles.container}>
                 <Show when={props.showClose}>
-                    <div class={styles.header}>
+                    <div classList={{
+                        [styles.header]: true,
+                        [styles.floating_close]: props.closeButtonFloating
+                    }}>
                         <div>
 
                         </div>
-                        <Button flat={true} tooltip="close this window" callback={props.closeCallback}>
+                        <Button class={styles.close_button} flat={true} tooltip="close this window" callback={props.closeCallback}>
                             {props.closeButtonContent?.()??"X"}
                         </Button>
                     </div>
@@ -39,13 +43,18 @@ function ModalWindow(props: ModalWindowProps) {
     );
 }
 
+interface ModalWindowOptions {
+    floatingClose?: boolean,
+    showCloseButton?: boolean
+}
+
 interface ModalWindowProviderProps {
     children: JSXElement;
     closeButtonContent?: ()=>JSXElement
 }
 
 export type ModalWindowContextValue = {
-    popup: (content: ()=>JSXElement, showCloseButton?: boolean) => Promise<void>;
+    popup: (content: ()=>JSXElement, options?: ModalWindowOptions) => Promise<void>;
     close: () => Promise<void>;
     closeButton: {get: ()=>boolean, set: (state: boolean) => void;}
 };
@@ -55,6 +64,7 @@ const ModalWindowContext = createContext<ModalWindowContextValue>();
 export function ModalWindowProvider(props: ModalWindowProviderProps) {
     const [windowContent, setWindowContent] = createSignal<(()=>JSXElement )| undefined>(undefined);
     const [showClose, setShowClose] = createSignal<boolean>(true);
+    const [floatingClose, setFloatingClose] = createSignal<boolean>(false);
     let accessMutex = new Mutex();
     let unlockCallback: (() => void) | undefined = undefined
 
@@ -71,13 +81,17 @@ export function ModalWindowProvider(props: ModalWindowProviderProps) {
         }
     }
 
-    async function popup(content: (()=>JSXElement), allowClosing?: boolean) {
+    async function popup(content: (() => JSXElement), options?: ModalWindowOptions) {
+        const showClose = options?.showCloseButton ?? true
+        const floatingClose = options?.floatingClose ?? false
+        
         console.debug("waiting to show modal window");
         unlockCallback = await accessMutex.lock();
         console.debug("showing modal window");
 
         // wrap so the function is stored as a value, not treated as an updater
-        setShowClose(allowClosing ?? true)
+        setShowClose(showClose)
+        setFloatingClose(floatingClose)
         setWindowContent(() => content);
         closedPromise = new DeferredPromise()
 
@@ -100,6 +114,7 @@ export function ModalWindowProvider(props: ModalWindowProviderProps) {
                     closeCallback={close}
                     content={windowContent() as () => JSXElement}
                     showClose={showClose()}
+                    closeButtonFloating={floatingClose()}
                     closeButtonContent={props.closeButtonContent}
                 ></ModalWindow>
             </Show>
@@ -108,4 +123,10 @@ export function ModalWindowProvider(props: ModalWindowProviderProps) {
     );
 }
 
-export const useModalWindow = () => useContext(ModalWindowContext);
+export function useModalWindow() {
+    const result = useContext(ModalWindowContext);
+    if (result === undefined) {
+        throw Error("Modal window context required")
+    }
+    return result;
+}
