@@ -12,6 +12,33 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --flat-btn-opacity: 0.5;
+
+  --btn-bg-color: var(--bg-color-1);
+  --btn-border-color: var(--bg-color-4);
+  --btn-text-color: var(--text-color-light);
+  --btn-hover-bg-color: var(--bg-color-3);
+  --btn-hover-border-color: var(--acc-color-3);
+  --btn-active-bg-color: var(--acc-color-2);
+  --btn-disabled-bg-color: var(--bg-color-3);
+  --btn-disabled-border-color: var(--bg-color-4);
+
+  --toggled-btn-text-color: var(--bg-color-1);
+  --toggled-btn-bg-color: var(--acc-color-3);
+  --toggled-btn-hover-bg-color: var(--acc-color-2);
+  --toggled-btn-hover-border-color: var(--acc-color-4);
+  --toggled-btn-active-bg-color: var(--bg-color-1);
+  --toggled-btn-disabled-bg-color: var(--acc-color-2);
+  --toggled-btn-disabled-border-color: var(--acc-color-3);
+
+  --flat-btn-hover-bg-color: var(--bg-color-3-rgb);
+  --flat-btn-active-bg-color: var(--acc-color-2-rgb);
+  --flat-btn-disabled-bg-color: var(--bg-color-3-rgb);
+
+  --flat-toggled-btn-text-color: var(--bg-color-1-rgb);
+  --flat-toggled-btn-bg-color: var(--acc-color-3-rgb);
+  --flat-toggled-btn-hover-bg-color: var(--acc-color-2-rgb);
+  --flat-toggled-btn-active-bg-color: var(--bg-color-1-rgb);
+  --flat-toggled-btn-disabled-bg-color: var(--acc-color-2-rgb);
 }
 
 html,body,#root{
@@ -61,48 +88,48 @@ span.underline{
 }
 
 button.button, .button{
-  background-color: var(--bg-color-1);
+  background-color: var(--btn-bg-color);
   cursor: pointer;
-  border: var(--bg-color-4) 1px solid;
+  border: var(--btn-border-color) 1px solid;
   padding: 5px;
   border-radius: 2px;
   transition: background-color 0.1s cubic-bezier(.22, .61, .36, 1), border-color 0.1s ease-in-out;
-  color: var(--text-color-light);
+  color: var(--btn-text-color);
 }
 
 button.button:hover:enabled, .button:hover{
-  background: var(--bg-color-3);
-  border-color: var(--acc-color-3);
+  background: var(--btn-hover-bg-color);
+  border-color: var(--btn-hover-border-color);
 }
 
 button.button:active:enabled, .button:active{
-  background: var(--acc-color-2);
+  background: var(--btn-active-bg-color);
 }
 
 button.button:disabled,  .button:disabled{
   cursor:not-allowed;
-  background: var(--bg-color-3);
-  border-color: var(--bg-color-4);
+  background: var(--btn-disabled-bg-color);
+  border-color: var(--btn-disabled-border-color);
 }
 
 button.button.toggled, .button.toggled{
-    color: var(--bg-color-1);
-    background-color: var(--acc-color-3);
+    color: var(--toggled-btn-text-color);
+    background-color: var(--toggled-btn-bg-color);
     font-weight: bold;
 }
 
 .button.toggled:hover:enabled, button.button.toggled:hover:enabled{
-    background: var(--acc-color-2);
-    border-color: var(--acc-color-4);
+    background: var(--toggled-btn-hover-bg-color);
+    border-color: var(--toggled-btn-hover-border-color);
 }
 
 button.button.toggled:active:enabled, .button.toggled:active{
-  background: var(--bg-color-1);
+  background: var(--toggled-btn-active-bg-color);
 }
 
 button.button.toggled:disabled,  .button.toggled:disabled{
-    background: var(--acc-color-2);
-    border-color: var(--acc-color-3);
+    background: var(--toggled-btn-disabled-bg-color);
+    border-color: var(--toggled-btn-disabled-border-color);
 }
 
 
@@ -114,34 +141,34 @@ button.button.flat, .button.flat{
 }
 
 button.button.flat:hover:enabled, .button.flat:hover{
-    background: rgba(var(--bg-color-3-rgb),var(--flat-btn-opacity));
+    background: rgba(var(--flat-btn-hover-bg-color), var(--flat-btn-opacity));
 }
 
 button.button.flat:active:enabled, .button.flat:active{
-    background: rgba(var(--acc-color-2-rgb),var(--flat-btn-opacity));
+    background: rgba(var(--flat-btn-active-bg-color), var(--flat-btn-opacity));
 }
 
 button.button.flat:disabled,  .button.flat:disabled{
     cursor:not-allowed;
-    background: rgba(var(--bg-color-3-rgb),var(--flat-btn-opacity));
+    background: rgba(var(--flat-btn-disabled-bg-color), var(--flat-btn-opacity));
 }
 
 button.button.flat.toggled, .button.flat.toggled{
-    color: rgba(var(--bg-color-1-rgb),var(--flat-btn-opacity));
-    background-color: rgba(var(--acc-color-3-rgb),var(--flat-btn-opacity));
+    color: rgba(var(--flat-toggled-btn-text-color), var(--flat-btn-opacity));
+    background-color: rgba(var(--flat-toggled-btn-bg-color), var(--flat-btn-opacity));
     font-weight: bold;
 }
 
 .button.flat.toggled:hover:enabled, button.button.flat.toggled:hover:enabled{
-    background: rgba(var(--acc-color-2-rgb),var(--flat-btn-opacity));
+    background: rgba(var(--flat-toggled-btn-hover-bg-color), var(--flat-btn-opacity));
 }
 
 button.button.flat.toggled:active:enabled, .button.toggled.flat:active{
-    background: rgba(var(--bg-color-1-rgb),var(--flat-btn-opacity));
+    background: rgba(var(--flat-toggled-btn-active-bg-color), var(--flat-btn-opacity));
 }
 
 button.button.flat.toggled:disabled,  .button.toggled.flat:disabled{
-    background: rgba(var(--acc-color-2-rgb),var(--flat-btn-opacity));
+    background: rgba(var(--flat-toggled-btn-disabled-bg-color), var(--flat-btn-opacity));
 }
 
 ::-webkit-scrollbar {
