@@ -1,9 +1,12 @@
 import { children, createEffect, createSignal, Show, type JSXElement} from 'solid-js'
 
 import styles from './Button.module.css'
+import { usePopupContext } from '../PopupProvider/PopupProvider';
 
 export interface ButtonProps {
-    callback? : () => Promise<boolean | void>;
+    callback?: () => Promise<boolean | void>;
+    preventClickthrough?: boolean;
+    actionName?: string;
     children?: JSXElement;
     class? : string;
     disabled?: boolean;
@@ -28,8 +31,10 @@ function isDisabled(loading : boolean, disabled : boolean | undefined){
 export function Button(props: ButtonProps) {
     const [loading, setLoading] = createSignal<boolean>(false);
     const [error, setError] = createSignal<boolean>(false);
+    const popupCntxt = usePopupContext();
 
-    const onclick = async () => {
+    const onclick = async (e: Event) => {
+        
         setLoading(true)
         setError(false);
         try {
@@ -38,10 +43,25 @@ export function Button(props: ButtonProps) {
             }
         } catch (error) {
             setError(true);
-            console.error(error);
+            if (popupCntxt !== undefined) {
+                popupCntxt.actions.push({
+                    value: error,
+                    severity: 'error',
+                    title: (props.actionName ?? "Action") + " failed"
+                })
+            }
+
+            if (props.actionName) {
+                console.error(props.actionName+" failed:",error);
+            } else {
+                console.error(error);
+            }
         }
 
         setLoading(false);
+        if (props.preventClickthrough ?? true) {
+            e.preventDefault()
+        }
     }
 
     createEffect(()=>{
