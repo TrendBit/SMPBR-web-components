@@ -1,0 +1,114 @@
+.popups_container{
+    position: absolute;
+    top: 100vh;
+    left: 100vw;
+    height: 0;
+    width: 0;
+    overflow: visible;
+}
+
+.popups{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+
+    height: auto;
+    max-height: 100vh;
+    width: 400px;
+
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+
+.popup{
+    position: relative;
+    border-left: solid 4px var(--popup-border);
+    background: var(--popup-bg);
+    border-radius: 0 5px 5px 0;
+
+    padding: 4px;
+    opacity: 0.7;
+    transition: right 0.5s ease-in-out;
+    right: -100%;
+}
+
+.popup.second_frame{
+    right: 0px;
+}
+
+.popup.error{
+    --popup-bg: rgba(var(--err-color-2-rgb),0.4);
+    --popup-color: var(--err-color-4);
+    --popup-border: var(--err-color-2);
+}
+.popup.warning{
+    --popup-bg: rgba(var(--bg-color-3-rgb),0.8);
+    --popup-color: var(--warn-color-3);
+    --popup-border: var(--warn-color-2);
+}
+.popup.info{
+    --popup-bg: rgba(var(--bg-color-3-rgb),0.8);
+    --popup-color: white;
+    --popup-border: var(--acc-color-2);
+}
+.popup:hover{
+    --popup-color: white;
+    opacity: 1;
+}
+.popup.leaving{
+    opacity: 0;
+    transform: translateX(20px);
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--popup-color);
+
+    .close_button{
+        border: none;
+        background: none;
+
+        font-weight: bolder;
+
+        cursor: pointer;
+
+        transition: color 0.2s ease-in-out;
+    }
+
+    .close_button:hover{
+        color: white;
+    }
+}
+.body{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.progress_container{
+    min-height: 0;
+    min-width: 0;
+    width: 100%;
+    height: 5px;
+
+    border: 1px solid var(--popup-border);
+}
+
+.progress{
+    height: 100%;
+    background: var(--popup-color);
+}
