@@ -4,6 +4,10 @@
     align-items: center;
     overflow: hidden;
     position: relative;
+
+    *{
+        white-space: nowrap !important;
+    }
 }
 
 .auto_scroller{
