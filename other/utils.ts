@@ -337,3 +337,11 @@ export function max(a: number, b: number) {
 export function min(a: number, b: number) {
     return (a>b)?b:a
 }
+
+export function waitForNextFrame() {
+    return new Promise((resolve) => {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(resolve);
+        });
+    });
+}
