@@ -45,7 +45,7 @@
 }
 
 .popup.error{
-    --popup-bg: rgba(var(--err-color-2-rgb),0.4);
+    --popup-bg: rgba(var(--err-color-1-rgb),0.8);
     --popup-color: var(--err-color-4);
     --popup-border: var(--err-color-2);
 }
