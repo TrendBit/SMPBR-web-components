@@ -106,6 +106,7 @@ export class RecordReconciler<U extends object> extends Reconciler<RecordReconci
     
     reconcile(newVal: RecordReconcilerU<U>): ReconcilerResult<RecordReconcilerU<U>> {
         let changed = false;
+        let checked = false;
 
         if (newVal === undefined) {
             return {
@@ -118,6 +119,8 @@ export class RecordReconciler<U extends object> extends Reconciler<RecordReconci
         const newHashes : typeof this.hashes = {}
 
         for (let id in newVal) {
+            checked = true;
+            
             const val = newVal[id]
             const last = this.hashes[id];
             const newHash = objectHash(val);
@@ -153,7 +156,7 @@ export class RecordReconciler<U extends object> extends Reconciler<RecordReconci
             }
         }
         
-        if (changed) {
+        if (changed || !checked) {
             this.hashes = newHashes
             return {
                 changed: true,
