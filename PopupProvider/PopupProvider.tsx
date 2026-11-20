@@ -1,4 +1,4 @@
-import { createContext, useContext, createSignal, onMount, onCleanup, JSXElement, JSX } from "solid-js";
+import { createContext, useContext, createSignal, onMount, onCleanup, JSXElement, JSX, Show } from "solid-js";
 import { For } from "solid-js";
 
 import styles from "./PopupProvider.module.css"
@@ -14,12 +14,14 @@ type Popup = {
     },
     value: any,
     title: string
-    severity: Severity
+    severity: Severity,
+    userAction: boolean
 }
 export type PopupOptions = {
     value: any,
     severity: Severity,
     title: string
+    userAction?: boolean
 }
 export type PopupContextValue = {
     popups: () => Popup[],
@@ -162,7 +164,8 @@ const DEFAULT_POPUP_TIMEOUT: number = 3000;
 interface PopupProviderProps {
     children: any;
     timeout?: number;
-    customPopupBodyRenderer?: CustomPopupBodyRenderer
+    customPopupBodyRenderer?: CustomPopupBodyRenderer,
+    onlyUserActions: boolean
 }
 const PopupContext = createContext<PopupContextValue>();
 
@@ -229,7 +232,8 @@ export function PopupProvider(props: PopupProviderProps) {
             },
             value: options.value,
             severity: options.severity,
-            title: options.title
+            title: options.title,
+            userAction: options.userAction ?? true
         };
         
         currId += 1;
@@ -322,15 +326,17 @@ export function PopupProvider(props: PopupProviderProps) {
                 <div class={styles.popups} ref={popupsRef}>
                     <For each={popups()}>
                         {(popup) => (
-                            <PopupElement
-                                target={popup}
-                                onHoverStart={() => interactStart(popup)}
-                                onHoverEnd={() => interactEnd(popup)}
-                                close={() => remove(popup.id)}
-                                customRenderer={props.customPopupBodyRenderer}
-                                timeout={timeout}
-                                isLeaving={() => leaving().has(popup.id)}
-                            ></PopupElement>
+                            <Show when={(props.onlyUserActions)?popup.userAction:true}>
+                                <PopupElement
+                                    target={popup}
+                                    onHoverStart={() => interactStart(popup)}
+                                    onHoverEnd={() => interactEnd(popup)}
+                                    close={() => remove(popup.id)}
+                                    customRenderer={props.customPopupBodyRenderer}
+                                    timeout={timeout}
+                                    isLeaving={() => leaving().has(popup.id)}
+                                ></PopupElement>
+                            </Show>
                         )}
                     </For>
                 </div>
