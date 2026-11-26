@@ -345,3 +345,20 @@ export function waitForNextFrame() {
         });
     });
 }
+
+export function formatBytes(bytes: number | undefined): string {
+    if (bytes == undefined) {
+        return "? B"
+    }
+    if (!Number.isFinite(bytes) || bytes <= 0) {
+        return "0 B"
+    }
+    const units = ["B", "KB", "MB", "GB"]
+    let value = bytes
+    let unit = 0
+    while (value >= 1024 && unit < units.length - 1) {
+        value /= 1024
+        unit++
+    }
+    return `${value.toFixed(unit === 0 ? 0 : 2)} ${units[unit]}`
+}
